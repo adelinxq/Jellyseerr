@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@drawable/dialog_background">
+
+    <!-- Iconiță -->
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:src="@mipmap/jellyseerricon"
+        android:contentDescription="Jellyseerr logo" />
+
+    <!-- Titlu -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="🔔 Activă notificările"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#111827"
+        android:layout_marginBottom="8dp" />
+
+    <!-- Subtitlu -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Pentru cele mai bune experiențe"
+        android:textSize="16sp"
+        android:textColor="#6D28D9"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Mesaj principal -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pentru a fi la curent cu toate noutățile din Jellyseerr și Emby, vă rugăm să activați notificările. Veți primi alerte pentru:"
+        android:textSize="14sp"
+        android:textColor="#4B5563"
+        android:lineSpacingExtra="4dp"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Liste cu beneficii -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✅ Cereri noi de filme/seriale"
+            android:textSize="14sp"
+            android:textColor="#374151"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✅ Starea cererilor tale"
+            android:textSize="14sp"
+            android:textColor="#374151"
+            android:drawablePadding="8dp"
+            android:layout_marginBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✅ Anunțuri importante"
+            android:textSize="14sp"
+            android:textColor="#374151"
+            android:drawablePadding="8dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

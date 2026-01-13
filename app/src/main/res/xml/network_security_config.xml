@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">adelin.org</domain>
+        <domain includeSubdomains="true">cdn.adelin.org</domain>
+        <domain includeSubdomains="true">jellyseerr.adelin.org</domain>
+    </domain-config>
+</network-security-config>
