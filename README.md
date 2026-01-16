@@ -2,10 +2,6 @@
 <h1>Jellyseerr pentru Android</h1>
 </div>
 
-<div align="center">
-<img src="https://adelinx.go.ro/public/Tutorials/docs-image/jellyseerr-on-android/final-vp].png" alt="Cum să descarci Aplicația Jellyseerr pentru Android" width="600">
-</div>
-
 ## Aplicație Nativă Android - Versiunea 1.1
 
 Jellyseerr este acum disponibil ca aplicație nativă pentru dispozitivele Android. Aceasta este o aplicație dedicată, nu un simplu wrapper web, oferind o experiență optimizată pentru mobil.
