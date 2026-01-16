@@ -1,6 +1,5 @@
-<div align="center">
-<h1>Jellyseerr pentru Android</h1>
-</div>
+
+# Jellyseerr pentru Android
 
 ## Aplicație Nativă Android - Versiunea 1.1
 
