@@ -1,66 +1,59 @@
-# Jellyseerr pentru Android
+<div align="center">
+<h1>Jellyseerr pentru Android</h1>
+</div>
+
+<div align="center">
+<img src="https://adelinx.go.ro/public/Tutorials/docs-image/jellyseerr-on-android/final-vp].png" alt="Cum să descarci Aplicația Jellyseerr pentru Android" width="600">
+</div>
 
 ## Aplicație Nativă Android - Versiunea 1.1
 
-Ne bucurăm să anunțăm lansarea oficială a aplicației Jellyseerr pentru Android! Aceasta nu este doar un wrapper web, ci o aplicație nativă dezvoltată special pentru dispozitivele mobile, oferind o experiență optimizată și performantă.
+Jellyseerr este acum disponibil ca aplicație nativă pentru dispozitivele Android. Aceasta este o aplicație dedicată, nu un simplu wrapper web, oferind o experiență optimizată pentru mobil.
 
-### Caracteristici Principale
-- **Interfață nativă Android** - Rapidă și fluidă
-- **Sistem de update automat** - Vei fi notificat când apare o nouă versiune
+### Caracteristici Versiunea 1.1:
+
+- **Sistem complet de update automat** - Aplicația verifică automat dacă există versiuni noi și le instalează
+- **Logo și iconiță nouă** - Design modern și recunoscut pentru aplicație
+- **Interfață optimizată** - Mai rapidă decât versiunea anterioară
+- **Compatibilitate extinsă** - Suport pentru Android 7.0 până la Android 14
+- **SSL Context personalizat** - Pentru conexiuni securizate la server
+- **Download Manager integrat** - Pentru descărcări stabile ale actualizărilor
+- **File Provider configurat** - Pentru instalări sigure pe dispozitiv
+- **Verificare hostname** - Dezactivată pentru self-signed certificates
+- **Gestionare erori îmbunătățită** - Cu logging detaliat pentru depanare
+- **Consum memorie redus** - Optimizat pentru performanță pe dispozitive mobile
+- **Timp pornire îmbunătățit** - Aplicația pornește mai rapid
+- **Consum baterie redus** - Eficient în utilizarea resurselor
+- **Dimensiune APK optimizată** - Fișier mai mic pentru descărcare rapidă
+- **Notificări integrate** - Pentru informări despre cereri și actualizări
+- **Interfață nativă Android** - Rapidă și fluidă, nu web view
 - **Logo personalizat** - Iconiță dedicată în drawer-ul aplicațiilor
-- **Notificări integrate** - Stay informed about your requests
-- **Optimizată pentru baterie** - Consum minim de resurse
 
----
 
 ## Descărcare Aplicație
 
-### 🔗 Linkuri Oficiale pentru Versiunea 1.1:
+**Descarcă Jellyseerr pentru Android v1.1:**
+[https://cdn.adelin.org/downloads/jellyseerr/apk/jellyseerr-android-v1.1.apk](https://cdn.adelin.org/downloads/jellyseerr/apk/jellyseerr-android-v1.1.apk)
 
-**Download Direct (Recomandat):**
-- [https://cdn.adelin.org/downloads/jellyseerr/apk/jellyseerr-android-v1.1.apk](https://cdn.adelin.org/downloads/jellyseerr/apk/jellyseerr-android-v1.1.apk)
-- [https://downloads.adelin.org/jellyseerr/android/v1.1/jellyseerr.apk](https://downloads.adelin.org/jellyseerr/android/v1.1/jellyseerr.apk)
-- [https://jellyseerr.adelin.org/download/android](https://jellyseerr.adelin.org/download/android)
-
-**Linkuri Alternative:**
-- [https://mirror1.adelin.org/jellyseerr/v1.1/android.apk](https://mirror1.adelin.org/jellyseerr/v1.1/android.apk)
-- [https://mirror2.adelin.org/apps/jellyseerr/android-latest.apk](https://mirror2.adelin.org/apps/jellyseerr/android-latest.apk)
-
-** Detalii Tehnice:**
+**Detalii Tehnice:**
 - **Versiune:** 1.1 (build 2)
-- **Dimensiune:** ~6.2 MB
+- **Dimensiune:** ~8.8 MB
 - **Sistem necesar:** Android 7.0 (Nougat) sau mai nou
 - **Arhitectură:** Universal (armeabi-v7a, arm64-v8a, x86, x86_64)
 
----
 
 ## Cum să Instalezi
 
-### Tutorial Vizual Pas-cu-Pas
+### Pași de Instalare:
 
-![Cum să descarci Aplicația Jellyseerr pentru Android](https://adelinx.go.ro/public/Tutorials/docs-image/jellyseerr-on-android/final-vp.png)
+1. **Descarcă APK-ul** de pe linkul de mai sus
+2. **Permite instalarea din surse necunoscute** în setările telefonului
+3. **Deschide fișierul .apk** descărcat
+4. **Urmați pașii de instalare**
+5. **Deschide aplicația** și configurează conexiunea la serverul tău Jellyseerr
 
-### 🔧 Pași de Instalare:
 
-1. **Descarcă APK-ul**
-   - Accesează oricare dintre linkurile de mai sus
-   - Apasă pe "Descarcă" sau "Download"
-   - Așteaptă finalizarea descărcării (~5-10 secunde)
+## Acces Alternativ
 
-2. **Permite instalarea din surse necunoscute**
-   - La prima deschidere a APK-ului, Android va cere permisiunea
-   - Apasă pe "Setări" → "Permite din această sursă"
-   - Revino la instalare
-
-3. **Instalează aplicația**
-   - Apasă "Instalează"
-   - Așteaptă ~3-5 secunde pentru finalizare
-   - Apasă "Deschide" sau "Terminat"
-
-4. **Configurează conexiunea**
-   - La prima pornire, introdu adresa serverului tău Jellyseerr
-   - Sau folosește autodetectarea dacă ești în aceeași rețea
-
-### ⚡ Instalare Rapidă (ADB):
-```bash
-adb install jellyseerr-android-v1.1.apk
+Aplicația se poate accesa și prin browser la adresa:
+[https://jellyseerr.adelin.org](https://jellyseerr.adelin.org)
