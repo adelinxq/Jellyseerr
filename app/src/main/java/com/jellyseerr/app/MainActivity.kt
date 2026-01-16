@@ -30,7 +30,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import android.app.NotificationManager
-
+import android.view.ViewOutlineProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
@@ -39,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var logoImageView: ImageView
     private val handler = Handler(Looper.getMainLooper())
     private val JELLYSEERR_URL = "https://jellyseerr-app.adelin.org/"
+
+    private var isFirstLoad = true
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        // WebViewClient
+// WebViewClient
         webView.webViewClient = object : WebViewClient() {
 
             // SSL ERROR HANDLING pentru domeniul tău
@@ -144,19 +150,24 @@ class MainActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     webView.evaluateJavascript(
                         """
-                        document.body.style.webkitTapHighlightColor = 'transparent';
-                        var allElements = document.getElementsByTagName('*');
-                        for(var i=0; i<allElements.length; i++) {
-                            allElements[i].style.webkitTapHighlightColor = 'transparent';
-                        }
-                    """.trimIndent(), null
+                document.body.style.webkitTapHighlightColor = 'transparent';
+                var allElements = document.getElementsByTagName('*');
+                for(var i=0; i<allElements.length; i++) {
+                    allElements[i].style.webkitTapHighlightColor = 'transparent';
+                }
+            """.trimIndent(), null
                     )
                 }
 
-                // ANIMAȚIE CROSSFADE
-                handler.postDelayed({
-                    startCrossfadeAnimation()
-                }, 1)
+                // ANIMAȚIE CROSSFADE DOAR LA PRIMA ÎNCĂRCARE
+                // Verifică dacă URL-ul este homepage-ul și este prima încărcare
+                if (isFirstLoad && url?.startsWith(JELLYSEERR_URL) == true) {
+                    handler.postDelayed({
+                        startCrossfadeAnimation()
+                    }, 1)
+                    isFirstLoad = false
+                }
+                // Dacă nu este prima încărcare, NU mai rulează animația
             }
 
             // ERROR HANDLING
@@ -178,23 +189,27 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            @SuppressLint("QueryPermissionsNeeded")
             override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
                 url ?: return false
 
-                // DOAR jellyseerr.adelin.org rămâne în WebView
-                if (url.contains("jellyseerr-app.adelin.org")) {
-                    return false  // rămâne în WebView
+                // DOAR acest URL EXACT rămâne în WebView
+                if (url.startsWith("https://jellyseerr-app.adelin.org/") ||
+                    url == "https://jellyseerr-app.adelin.org") {
+                    return false // Rămâne în WebView
                 }
 
-                // TOATE celelalte linkuri care încep cu https:// sau http://
-                // (inclusiv adelin.org fără jellyseerr) se deschid în browser extern
+                // Dacă este link relativ către home ("/")
+                if (url == "/") {
+                    // Navighează la homepage în WebView
+                    view?.loadUrl(JELLYSEERR_URL)
+                    return true // Spunem că am gestionat noi navigarea
+                }
+
+                // ORICE alt link care începe cu https:// sau http:// (inclusiv jellyseerr.adelin.org)
                 if (url.startsWith("https://") || url.startsWith("http://")) {
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-                        // Deschide în orice browser disponibil
                         startActivity(intent)
                         return true
                     } catch (e: Exception) {
@@ -203,13 +218,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                // Pentru toate celelalte linkuri (javascript:, mailto:, tel:, etc)
-                // lasă WebView să le gestioneze
+                // Pentru linkurile interne (javascript:, mailto:, tel:, etc) - rămân în WebView
                 return false
             }
         }
-
-
 
 
 
@@ -240,8 +252,13 @@ class MainActivity : AppCompatActivity() {
 
         // Încarcă Jellyseerr
         handler.postDelayed({
+            isFirstLoad = true  // Resetează pentru siguranță
             webView.loadUrl(JELLYSEERR_URL)
         }, 1)
+
+        handler.postDelayed({
+            checkForAppUpdate()
+        }, 1000)
     }
 
     private fun showBeautifulNotificationDialog() {
@@ -339,6 +356,26 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun createLogoWithYourImage() {
+        // CREEAZĂ UN GRADIENT MULT MAI FRUMOS PENTRU SPLASH SCREEN
+        // Folosește un gradient diagonal cu mai multe culori pentru efect premium
+        val premiumGradient = android.graphics.drawable.GradientDrawable(
+            android.graphics.drawable.GradientDrawable.Orientation.TL_BR, // Diagonal din stânga-sus spre dreapta-jos
+            intArrayOf(
+                Color.parseColor("#0F172A"),    // Albastru închis premium
+                Color.parseColor("#1E1B4B"),    // Violet intens
+                Color.parseColor("#111827"),    // Culoarea ta principală (#111827)
+                Color.parseColor("#1E293B")     // Albastru deschis
+            )
+        )
+
+        // Setează corner radius pentru un efect mai modern
+        premiumGradient.cornerRadius = 0f
+        premiumGradient.gradientType = android.graphics.drawable.GradientDrawable.LINEAR_GRADIENT
+
+        // APLICĂ GRADIENTUL PREMIUM PE SPLASHVIEW
+        splashView.background = premiumGradient
+
+        // Creează logo-ul
         logoImageView = ImageView(this).apply {
             layoutParams = FrameLayout.LayoutParams(
                 dpToPx(200),
@@ -348,7 +385,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             try {
-                setImageResource(R.drawable.logo_full) // Logo din drawable
+                setImageResource(R.drawable.logo_full)
             } catch (e: Exception) {
                 e.printStackTrace()
                 try {
@@ -362,15 +399,32 @@ class MainActivity : AppCompatActivity() {
             scaleType = ImageView.ScaleType.CENTER_INSIDE
             adjustViewBounds = true
             alpha = 0f
-
-            // ELIMINĂ ORICE ROTIRE SAU ELEVATION
             rotation = 0f
             elevation = 0f
+
+            // Adaugă o umbră subtilă logo-ului pentru efect 3D
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                elevation = dpToPx(8).toFloat()
+                translationZ = dpToPx(8).toFloat()
+            }
         }
 
         // ASIGURĂ-TE CĂ LOGO-UL E ADAUGAT ÎN LOCUL CORECT
         rootLayout.addView(logoImageView)
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun startLogoPulseAnimation() {
         // Reset rotation la 0 pentru animație
@@ -445,6 +499,8 @@ class MainActivity : AppCompatActivity() {
             }
             .withEndAction {
                 logoImageView.visibility = View.GONE
+                // ASCUNDE LOGO-UL COMPLET după animație
+                logoImageView.alpha = 0f
 
                 // 2. WebView fades in with subtle zoom
                 webView.animate()
@@ -459,6 +515,8 @@ class MainActivity : AppCompatActivity() {
                             .setDuration(200)
                             .withEndAction {
                                 splashView.visibility = View.GONE
+                                // ASCUNDE SPLASH COMPLET
+                                splashView.alpha = 0f
                             }
                             .start()
                     }
@@ -493,6 +551,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
     // === SFÂRȘIT FUNCȚIE NOUĂ ===
+
+
+
 
 
 
@@ -569,6 +630,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     override fun onDestroy() {
         super.onDestroy()
         if (::webView.isInitialized) {
@@ -576,5 +638,127 @@ class MainActivity : AppCompatActivity() {
             webView.destroy()
         }
         handler.removeCallbacksAndMessages(null)
+    }
+
+
+
+
+
+
+
+
+
+    private fun checkForAppUpdate() {
+        println("=== UPDATE CHECK START ===")
+        println("📱 Local version: ${BuildConfig.VERSION_CODE} (${BuildConfig.VERSION_NAME})")
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                println("🔄 Creating AppUpdater...")
+                val updater = AppUpdater(this@MainActivity)
+
+                println("📡 Checking for update...")
+                val updateInfo = updater.checkForUpdate(showToast = false)
+
+                if (updateInfo != null) {
+                    println("🎉 UPDATE FOUND! v${updateInfo.latestVersionName}")
+
+                    // Afișează dialogul pe thread-ul principal
+                    withContext(Dispatchers.Main) {
+                        showUpdateDialog(updateInfo)
+                    }
+                } else {
+                    println("📭 No update available or error")
+                }
+
+            } catch (e: Exception) {
+                println("🔥 ERROR in update check: ${e.message}")
+                e.printStackTrace()
+            }
+            println("=== UPDATE CHECK END ===")
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private fun tryFallbackWithProxy() {
+        Thread {
+            try {
+                // Folosește un URL intermediar
+                val proxyUrl = "https://api.allorigins.win/raw?url=${java.net.URLEncoder.encode(
+                    "https://cdn-update.adelin.org/jellyseerr/app/update.json", "UTF-8")}"
+
+                println("🔄 Trying proxy: $proxyUrl")
+                val text = java.net.URL(proxyUrl).readText()
+                println("🔄 PROXY SUCCESS: ${text.take(200)}")
+
+                // ... parsează JSON și arată dialog ...
+
+            } catch (e: Exception) {
+                println("🔄 PROXY FAILED: ${e.message}")
+            }
+        }.start()
+    }
+
+
+
+
+
+
+
+
+
+
+    private fun showUpdateDialog(updateInfo: AppUpdater.UpdateInfo) {
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Actualizare disponibilă! v${updateInfo.latestVersionName}")
+            .setMessage("Ce este nou:\n${updateInfo.whatsNew}")
+            .setPositiveButton("Actualizează acum") { dialog, _ ->
+                dialog.dismiss()
+                CoroutineScope(Dispatchers.IO).launch {
+                    val updater = AppUpdater(this@MainActivity)
+                    withContext(Dispatchers.Main) {
+                        updater.downloadAndInstall(updateInfo.apkUrl)
+                    }
+                }
+            }
+            .setNegativeButton("Mai târziu") { dialog, _ ->
+                dialog.dismiss()
+                if (updateInfo.mandatory) {
+                    // Dacă e actualizare obligatorie, poți forța ieșirea
+                    finish()
+                }
+            }
+            .setCancelable(!updateInfo.mandatory)
+            .create()
+
+        dialog.show()
+
+        // Personalizare culori (opțional) - folosește culoarea ta
+        dialog.window?.setBackgroundDrawableResource(android.R.color.background_dark)
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#6D28D9"))
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.parseColor("#9CA3AF"))
+
+        // Setează culoare text pentru titlu și mesaj
+        try {
+            val titleTextView = dialog.findViewById<android.widget.TextView>(android.R.id.title)
+            val messageTextView = dialog.findViewById<android.widget.TextView>(android.R.id.message)
+
+            titleTextView?.setTextColor(Color.WHITE)
+            messageTextView?.setTextColor(Color.WHITE)
+        } catch (e: Exception) {
+            // Ignoră eroare
+        }
     }
 }

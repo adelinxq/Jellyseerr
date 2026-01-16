@@ -9,7 +9,6 @@
 
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">adelin.org</domain>
-        <domain includeSubdomains="true">cdn.adelin.org</domain>
         <domain includeSubdomains="true">jellyseerr.adelin.org</domain>
     </domain-config>
 </network-security-config>

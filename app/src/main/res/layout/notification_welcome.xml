@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#111827"
+    android:id="@+id/notificationContainer">
+
+    <!-- Gradient Background -->
+    <View
+        android:id="@+id/gradientBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/notification_gradient" />
+
+    <!-- Logo Notificări -->
+    <ImageView
+        android:id="@+id/notificationLogo"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="centerInside"
+        android:alpha="0"
+        android:contentDescription="Logo Notificări"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Titlu -->
+    <TextView
+        android:id="@+id/welcomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Notificări"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:alpha="0"
+        android:fontFamily="sans-serif"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notificationLogo" />
+
+    <!-- Mesaj principal -->
+    <TextView
+        android:id="@+id/notificationMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:text="Jellyseerr ar dori să activeze notificările pentru cele mai noi noutăți despre Emby și Jellyseerr."
+        android:textColor="#D1D5DB"
+        android:textSize="18sp"
+        android:lineSpacingExtra="6dp"
+        android:alpha="0"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcomeTitle" />
+
+    <!-- Buton OMITE -->
+    <Button
+        android:id="@+id/skipButton"
+        android:layout_width="0dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_skip_outline"
+        android:text="OMITE"
+        android:textColor="#9CA3AF"
+        android:textSize="16sp"
+        android:alpha="0"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.03"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@id/allowButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Buton PERMITE NOTIFICĂRI -->
+    <Button
+        android:id="@+id/allowButton"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_allow_gradient"
+        android:text="PERMITE NOTIFICĂRI"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:alpha="0"
+        android:fontFamily="sans-serif"
+        android:textStyle="bold"
+        android:letterSpacing="0.02"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toTopOf="@id/smallText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Text mic jos -->
+    <TextView
+        android:id="@+id/smallText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Poți gestiona notificările oricând din Setări"
+        android:textColor="#6B7280"
+        android:textSize="14sp"
+        android:alpha="0"
+        android:fontFamily="sans-serif-light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
